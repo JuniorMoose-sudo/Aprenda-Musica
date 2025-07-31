@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = 'MusiArt_Paixao'  # Protege cookies de sessão
+app.secret_key = 'MusiArt_Paixao'
 
 # Dados de login
 USUARIO_ADMIN = 'admin'
@@ -43,12 +43,6 @@ class Aula(db.Model):
 @app.route('/')
 def index():
     return render_template('index.html')
-
-# Página admin
-'''@app.route('/admin')
-def admin():
-    return render_template('admin.html')'''
-
     
 # API - Listar aulas
 @app.route('/api/aulas', methods=['GET'])
@@ -104,6 +98,12 @@ def login():
             return redirect(url_for('login'))
     return render_template('login.html')
 
+# Pagina de Download do guia
+@app.route('/obrigado')
+def obrigado():
+    return render_template('obrigado.html')
+
+
 # API - Logout
 @app.route('/logout')
 def logout():
@@ -121,4 +121,5 @@ def admin():
 
 # Rodar servidor
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(debug=True, host='0.0.0.0', port=port)
