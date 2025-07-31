@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aprenda música do zero com aulas personalizadas de teclado, violão e canto para iniciantes">
+  <title>Aprenda Música do Zero - Aulas Personalizadas</title>
+
+  
+  
+  <!-- Preload de recursos importantes -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="style.css" as="style">
+  
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  <!-- Pré-conexão para melhor performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<!-- Header Hero Section -->
+<header class="hero">
+  <div class="container">
+    <h1>Nunca é Tarde Para Começar</h1>
+    <p class="lead">Aprenda Teclado, Violão ou Canto com aulas personalizadas para iniciantes</p>
+    <a href="https://wa.me/+5583994447187" class="btn btn-primary" target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i> Agende sua primeira aula gratuita
+    </a>
+  </div>
+</header>
+
+<!-- Seção de Benefícios -->
+<section class="features container">
+  <h2>Essa aula é pra você se...</h2>
+  <ul class="features-list">
+    <li><i class="fas fa-check-circle"></i> Nunca tocou um instrumento ou cantou</li>
+    <li><i class="fas fa-check-circle"></i> Quer aprender música de forma leve e divertida</li>
+    <li><i class="fas fa-check-circle"></i> Tem vontade mas acha que não consegue</li>
+    <li><i class="fas fa-check-circle"></i> Busca um hobby, um talento ou um novo começo</li>
+  </ul>
+  
+  <div class="testimonial">
+    <blockquote>
+      “Nunca pensei que conseguiria tocar uma música inteira... e hoje já toco para os meus amigos!”
+      <footer>— Ana, 14 anos</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- Seção de Aprendizado -->
+<section class="learning container px-3">
+  <h2>O Que Você Vai Aprender</h2>
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <h3><i class="fas fa-keyboard"></i> Teclado</h3>
+        <ul>
+          <li>Notas e escalas básicas</li>
+          <li>Acordes simples</li>
+          <li>Músicas fáceis para iniciantes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <h3><i class="fas fa-guitar"></i> Violão</h3>
+        <ul>
+          <li>Postura e harmonia correta</li>
+          <li>Acordes populares</li>
+          <li>Ritmos básicos (pop, gospel, MPB)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <h3><i class="fas fa-microphone"></i> Canto</h3>
+        <ul>
+          <li>Afinação e controle da respiração</li>
+          <li>Aquecimento vocal</li>
+          <li>Dicas para cantar com segurança</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Como Funciona -->
+<section class="how container">
+  <h2>Como Funciona</h2>
+  <ul class="how-list">
+    <li><i class="fas fa-chalkboard-teacher"></i> Aulas 100% personalizadas</li>
+    <li><i class="fas fa-laptop-house"></i> Online ou presenciais em sua cidade</li>
+    <li><i class="fas fa-calendar-alt"></i> Horários flexíveis</li>
+    <li><i class="fas fa-chart-line"></i> Acompanhamento da evolução de cada aluno</li>
+  </ul>
+</section>
+
+<!-- CTA Principal -->
+<section class="cta">
+  <div class="container">
+    <h2><i class="fas fa-gift"></i> Aula Experimental Gratuita!</h2>
+    <p>Escolha seu instrumento e agende uma conversa comigo. Quero te mostrar que você PODE aprender música, mesmo sem experiência.</p>
+    <a href="https://wa.me/+5583994447187" class="btn btn-primary" target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i> Quero minha aula gratuita
+    </a>
+  </div>
+</section>
+
+<!-- Depoimentos -->
+<section class="testimonials container">
+  <h2>O Que Meus Alunos Dizem</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="testimonial">
+        <blockquote>
+          “Comecei com 22 anos e já toco músicas que adoro.”
+          <footer>— Marcos</footer>
+        </blockquote>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="testimonial">
+        <blockquote>
+          “Achei que era complicado, mas com as aulas ficou divertido!”
+          <footer>— Luciana</footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sobre o Professor -->
+<section class="about container">
+  <div class="row align-items-center">
+    <div class="col-md-4">
+      <img src="{{ url_for('static', filename='img/perfil05.jpg') }}" alt="Foto do professor Junior">
+    </div>
+    <div class="col-md-8">
+      <h2>Sobre o Professor</h2>
+      <p>Olá! Meu nome é Junior, sou professor de música há mais de 10 anos. Ensino de forma leve e personalizada, ajudando cada aluno no seu ritmo. Já ajudei mais de 200 pessoas a descobrirem o prazer de tocar ou cantar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq container">
+  <h2>Dúvidas Frequentes</h2>
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+          Preciso ter instrumento em casa?
+        </button>
+      </h3>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Não, para começar podemos usar vídeos, apps ou usar seu celular como teclado virtual.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+          É possível trocar de instrumento depois?
+        </button>
+      </h3>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Sim, você pode mudar a qualquer momento.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+          E se eu não souber nada mesmo?
+        </button>
+      </h3>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Melhor ainda! Assim começamos do jeito certo.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Formulário de Contato -->
+<section class="contact container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2>Receba Um Guia Exclusivo para Iniciantes</h2>
+      <p class="text-center">Preencha abaixo e receba no seu e-mail um eBook gratuito com os primeiros acordes e dicas para treinar em casa.</p>
+      
+      <form action="https://formsubmit.co/juniornino084@gmail.com" method="POST" class="contact-form">
+        <input type="hidden" name="_next" value="https://seusite.com/obrigado.html">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Olá! Obrigado por se cadastrar. Em breve você receberá o guia no seu e-mail.">
+        
+        <div class="mb-3">
+          <input type="text" name="nome" class="form-control" placeholder="Seu nome" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" name="email" class="form-control" placeholder="Seu e-mail" required>
+        </div>
+        <div class="mb-3">
+          <select name="instrumento" class="form-select">
+            <option value="" disabled selected>Instrumento desejado</option>
+            <option value="Teclado">Teclado</option>
+            <option value="Violão">Violão</option>
+            <option value="Canto">Canto</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="fas fa-download"></i> Quero meu guia gratuito!
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2025 | Professor Junior - Todos os direitos reservados</p>
+    <div class="social-links">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://wa.me/+5583994447187" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- Botão flutuante WhatsApp -->
+<a href="https://wa.me/+5583994447187" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Contato pelo WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin - Agendamento de Aulas</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      padding: 10px;
+      background-color: #fbe9e7;
+      min-height: 100vh;
+      -webkit-text-size-adjust: 100%;
+      position: relative; /* Adicionado para posicionamento do botão home */
+    }
+    
+    /* Botão de home fixo */
+    .home-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #dc3545;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      border: none;
+      transition: all 0.3s ease;
+    }
+    
+    .home-button:hover {
+      transform: scale(1.1);
+      background-color: #c82333;
+    }
+    
+    .home-button i {
+      font-size: 1.5rem;
+    }
+    
+    #calendar {
+      width: 100%;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 70px; /* Espaço para o botão flutuante */
+    }
+    
+    /* Toolbar responsivo */
+    .fc-header-toolbar {
+      margin-bottom: 0.5em;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    
+    .fc-toolbar-title {
+      font-size: 1.2em;
+      margin: 5px 0;
+      text-align: center;
+      order: -1; /* Move o título para cima */
+    }
+    
+    .fc-toolbar-chunk {
+      display: flex;
+      justify-content: center;
+      margin: 3px 0;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    
+    /* Botões responsivos */
+    .fc-button {
+      padding: 0.3em 0.6em;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+    
+    /* Células do calendário */
+    .fc-daygrid-day {
+      min-height: 60px;
+    }
+    
+    .fc-daygrid-day-number {
+      font-size: 0.8em;
+      padding: 2px;
+    }
+    
+    .fc-daygrid-event {
+      font-size: 0.7em;
+      padding: 1px 3px;
+      margin: 1px 0;
+      white-space: normal;
+      word-break: break-word;
+    }
+    
+    .fc-event-time {
+      display: inline-block;
+      margin-right: 3px;
+    }
+    
+    .loading-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .modal-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 10px 15px;
+    }
+    
+    #btnSalvar {
+      min-width: 100px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    /* Ajustes para cabeçalho */
+    header {
+      padding-top: 15px;
+    }
+    
+    header h2 {
+      font-size: 1.5rem;
+    }
+    
+    /* Media Queries para diferentes tamanhos de tela */
+    @media (min-width: 576px) {
+      body {
+        padding: 15px;
+      }
+      #calendar {
+        padding: 15px;
+        margin-bottom: 0;
+      }
+      .fc-toolbar-title {
+        font-size: 1.5em;
+      }
+      .fc-button {
+        padding: 0.4em 0.8em;
+      }
+      .home-button {
+        width: 60px;
+        height: 60px;
+      }
+      .home-button i {
+        font-size: 1.8rem;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      #calendar {
+        padding: 20px;
+      }
+      .fc-header-toolbar {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+      }
+      .fc-toolbar-title {
+        font-size: 1.8em;
+        text-align: left;
+        order: 0;
+        margin: 0 15px 0 0;
+      }
+      .fc-toolbar-chunk {
+        margin: 0;
+        flex-wrap: nowrap;
+      }
+      #btnSalvar {
+        width: auto;
+        margin-top: 0;
+      }
+      header h2 {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (min-width: 992px) {
+      #calendar {
+        max-width: 1000px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+      .fc-button {
+        font-size: 1em;
+        padding: 0.5em 1em;
+      }
+    }
+    
+    /* Melhorias para telas muito pequenas */
+    @media (max-width: 400px) {
+      .fc-toolbar-chunk {
+        flex-wrap: wrap;
+        gap: 3px;
+      }
+      .fc-button {
+        margin: 1px;
+        font-size: 0.75em;
+        padding: 0.2em 0.4em;
+      }
+      .fc-daygrid-day {
+        min-height: 50px;
+      }
+      .fc-daygrid-event {
+        font-size: 0.6em;
+      }
+      header h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    <style>
+    /* Mantenha todos os estilos anteriores e adicione/modifique estes: */
+    
+    /* Ajustes específicos para o conteúdo dos dias */
+    .fc-daygrid-day-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .fc-daygrid-day-top {
+      display: flex;
+      justify-content: flex-end;
+      padding: 2px;
+    }
+    
+    .fc-daygrid-day-number {
+      font-size: 0.8em;
+      padding: 2px;
+      line-height: 1;
+    }
+    
+    .fc-daygrid-day-events {
+      flex-grow: 1;
+      margin-top: 2px;
+      min-height: 0; /* Permite que o conteúdo se ajuste */
+    }
+    
+    .fc-daygrid-event-harness {
+      position: relative;
+      margin-bottom: 1px;
+    }
+    
+    .fc-daygrid-event {
+      font-size: 0.7em;
+      padding: 1px 3px;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.3;
+    }
+    
+    /* Ajuste para telas muito pequenas */
+    @media (max-width: 400px) {
+      .fc-daygrid-day {
+        min-height: 40px; /* Reduzido para evitar espaços vazios */
+      }
+      
+      .fc-daygrid-day-number {
+        font-size: 0.7em;
+      }
+      
+      .fc-daygrid-event {
+        font-size: 0.6em;
+        padding: 0 1px;
+      }
+    }
+    
+    /* Garante que eventos múltiplos caberão no dia */
+    .fc-daygrid-more-link {
+      font-size: 0.6em;
+      padding: 0 2px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <header class="mb-4 text-center">
+      <h2 class="text-danger mb-3">📅 Agenda de Aulas</h2>
+      <p class="text-muted">Gerencie os agendamentos de aulas dos alunos</p>
+    </header>
+
+    <main>
+      <!-- Calendário com estado de carregamento -->
+      <div id="calendar-container">
+        <div id="calendar">
+          <div class="loading-spinner text-center py-5">
+            <div class="spinner-border text-danger" role="status">
+              <span class="visually-hidden">Carregando calendário...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal para agendar aula -->
+      <div class="modal fade" id="modalAgendamento" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <form id="formAgendamento" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Agendar Nova Aula</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="dataSelecionada" name="data">
+              
+              <div class="mb-3">
+                <label for="nomeAluno" class="form-label">Nome do Aluno <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nomeAluno" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="instrumento" class="form-label">Instrumento <span class="text-danger">*</span></label>
+                <select class="form-select" id="instrumento" required>
+                  <option value="" disabled selected>Selecione...</option>
+                  <option value="Teclado">Teclado</option>
+                  <option value="Violão">Violão</option>
+                  <option value="Canto">Canto</option>
+                  <option value="Bateria">Bateria</option>
+                  <option value="Guitarra">Guitarra</option>
+                </select>
+              </div>
+              
+              <div class="mb-3">
+                <label for="hora" class="form-label">Horário <span class="text-danger">*</span></label>
+                <input type="time" class="form-control" id="hora" min="08:00" max="20:00" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="obs" class="form-label">Observações</label>
+                <textarea class="form-control" id="obs" rows="3" placeholder="Informações adicionais..."></textarea>
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" id="btnExcluir" class="btn btn-outline-danger" style="display:none;">Excluir</button>
+              <button type="submit" id="btnSalvar" class="btn btn-danger">
+                <span class="btn-text">Agendar Aula</span>
+                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.global.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <script>
+    // Verificação básica se as dependências foram carregadas
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!window.FullCalendar || !window.bootstrap) {
+        document.getElementById('calendar-container').innerHTML = `
+          <div class="alert alert-danger">
+            <h4>Erro ao carregar recursos</h4>
+            <p>Algumas dependências não foram carregadas corretamente. Por favor, recarregue a página.</p>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
